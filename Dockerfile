@@ -1,20 +1,27 @@
-FROM alpine:3.16
+FROM alpine:latest
+
+RUN sed -i 's@dl-cdn.alpinelinux.org/alpine@alpine.mirror.wearetriple.com@g' /etc/apk/repositories
+RUN echo "@testing https://alpine.mirror.wearetriple.com/edge/testing/" >> /etc/apk/repositories
+RUN echo "@main https://alpine.mirror.wearetriple.com/edge/main/" >> /etc/apk/repositories
+RUN echo "@community https://alpine.mirror.wearetriple.com/edge/community/" >> /etc/apk/repositories
 
 RUN apk add --no-cache \
-        bash \
-        bind-tools \
-        dante-server \
-        iptables \
-        openvpn \
-        nftables \
-        shadow \
-        tinyproxy
+        bash@main \
+        bind-tools@main \
+        dante-server@community \
+        iptables@testing \
+        openvpn@testing \
+        nftables@testing \
+        shadow@community  \
+        tinyproxy@testing
 
 COPY data/ /data/
 
 ENV KILL_SWITCH=iptables
 ENV USE_VPN_DNS=on
 ENV VPN_LOG_LEVEL=3
+ENV HTTP_PROXY=1
+ENV SOCKS_PROXY=1
 
 ARG BUILD_DATE
 ARG IMAGE_VERSION
