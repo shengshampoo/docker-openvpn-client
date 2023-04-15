@@ -9,11 +9,11 @@ RUN apk add --no-cache \
         bash@main \
         bind-tools@main \
         dante-server@community \
-        iptables@testing \
-        openvpn@testing \
-        nftables@testing \
+        iptables@main \
+        openvpn@main \
+        nftables@main \
         shadow@community  \
-        tinyproxy@testing
+        tinyproxy@main
 
 COPY data/ /data/
 
